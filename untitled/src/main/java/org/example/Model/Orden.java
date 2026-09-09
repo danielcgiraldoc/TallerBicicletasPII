@@ -29,6 +29,7 @@ public class Orden {
                 ", mecanicos=" + listMecanicos.size() +
                 ", repuestos=" + listRepuestos.size());
     }
+    
 
 
     //Contructor
@@ -45,7 +46,16 @@ public class Orden {
         this.listRepuestos = new ArrayList<>();
     }
 
-
+int calcularCostoTotal(){
+        int total = 0;
+        for (Repuesto r : listRepuestos){
+            total += r.getCosto();
+        }
+        for (Tarea t : listTareas){
+            total += t.getCosto();
+        }
+        return total;
+}
 
     //Gtt && Stt
 
