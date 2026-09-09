@@ -82,11 +82,11 @@ public class Mecanico implements IDisponible{
         this.especialidad = especialidad;
     }
 
-    public boolean isDisponibilidad() {
-        return disponibilidad;
+    public boolean getDisponible() {
+        return disponible;
     }
 
-    public void setDisponibilidad(boolean disponibilidad) {
-        this.disponibilidad = disponibilidad;
+    public void setDisponible(boolean disponible) {
+        this.disponible = disponible;
     }
 }

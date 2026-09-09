@@ -3,10 +3,10 @@ package org.example.Model;
 public class Tarea {
     private String nombre;
     private String descripcion;
-    private double costo;
+    private int costo;
 
 
-    public Tarea(String nombre, String descripcion, double costo) {
+    public Tarea(String nombre, String descripcion, int costo) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.costo = costo;
@@ -28,11 +28,11 @@ public class Tarea {
         this.descripcion = descripcion;
     }
 
-    public double getCosto() {
+    public int getCosto() {
         return costo;
     }
 
-    public void setCosto(double costo) {
+    public void setCosto(int costo) {
         this.costo = costo;
     }
 }

@@ -16,7 +16,7 @@ public class Taller {
 
     //Contructor
 
-    public Taller(String nit, String nombre, String direccion, ArrayList<Cliente> listClientes, ArrayList<Bicicleta> listBicicletas, ArrayList<Orden> listOrdenes, ArrayList<Mecanico> listMecanicos, ArrayList<Repuesto> listRepuestos) {
+    public Taller(String nit, String nombre, String direccion) {
         this.nit = nit;
         this.nombre = nombre;
         this.direccion = direccion;
@@ -27,6 +27,27 @@ public class Taller {
         this.listRepuestos = new ArrayList<>();
     }
 
+
+    //Adds
+    public void addCliente(Cliente cliente) {
+        listClientes.add(cliente);
+    }
+
+    public void addBicicleta(Bicicleta bicicleta) {
+        listBicicletas.add(bicicleta);
+    }
+
+    public void addOrden(Orden orden) {
+        listOrdenes.add(orden);
+    }
+
+    public void addMecanico(Mecanico mecanico) {
+        listMecanicos.add(mecanico);
+    }
+
+    public void addRepuesto(Repuesto repuesto) {
+        listRepuestos.add(repuesto);
+    }
 
     //CRUD CLIENTE
     public boolean registrarCliente(String nombre, String id, String telefono, String direccion) {
@@ -214,7 +235,7 @@ public class Taller {
         if (posicion != -1) {
             listMecanicos.get(posicion).setNombre(nombre);
             listMecanicos.get(posicion).setCodigo(codigo);
-            listMecanicos.get(posicion).setDisponibilidad(disponible);
+            listMecanicos.get(posicion).setDisponible(disponible);
             return true;
         }
         return false;
@@ -222,6 +243,10 @@ public class Taller {
 
 
 //Create tarea
+public boolean crearTarea(String  nombre, String descripcion, int costo){
+        Tarea tarea = new Tarea(nombre, descripcion, costo);
+        return true;
+}
 
 
 
@@ -281,12 +306,12 @@ public class Taller {
         this.listOrdenes = listOrdenes;
     }
 
-    public ArrayList<Mecanico> getLsitMecanicos() {
-        return lsitMecanicos;
+    public ArrayList<Mecanico> getListMecanicos() {
+        return listMecanicos;
     }
 
-    public void setLsitMecanicos(ArrayList<Mecanico> lsitMecanicos) {
-        this.lsitMecanicos = lsitMecanicos;
+    public void setListMecanicos(ArrayList<Mecanico> listMecanicos) {
+        this.listMecanicos = listMecanicos;
     }
 
     public ArrayList<Repuesto> getListRepuestos() {

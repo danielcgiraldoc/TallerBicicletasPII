@@ -5,23 +5,39 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class Orden {
+    private String codigo;
     private LocalDate fechaIngreso;
     private LocalTime horaIngreso;
     private String diagnostico;
-    private Cliente theCliente;
     private Bicicleta theBicicleta;
     private ArrayList<Tarea> listTareas;
     private EstadoOrden estado;
     private ArrayList<Mecanico> listMecanicos;
     private ArrayList<Repuesto> listRepuestos;
 
+    @Override
+    public String toString() {
+        return "Orden{" +
+                "codigo='" + codigo + '\'' +
+                ", fechaIngreso=" + fechaIngreso +
+                ", horaIngreso=" + horaIngreso +
+                ", diagnostico='" + diagnostico + '\'' +
+                ", cliente=" + (theBicicleta.getTheCliente().getNombre() +
+                ", bicicleta=" + (theBicicleta != null ? theBicicleta.getMarca() : "null") +
+                ", tareas=" + listTareas.size() +
+                ", estado=" + estado +
+                ", mecanicos=" + listMecanicos.size() +
+                ", repuestos=" + listRepuestos.size());
+    }
+
+
     //Contructor
 
-    public Orden(LocalDate fechaIngreso, LocalTime horaIngreso, String diagnostico, Cliente theCliente, Bicicleta theBicicleta, ArrayList<Tarea> listTareas, EstadoOrden estado, ArrayList<Mecanico> listMecanicos, ArrayList<Repuesto> listRepuestos) {
+    public Orden(String codigo, LocalDate fechaIngreso, LocalTime horaIngreso, String diagnostico, Bicicleta theBicicleta, ArrayList<Tarea> listTareas, EstadoOrden estado, ArrayList<Mecanico> listMecanicos, ArrayList<Repuesto> listRepuestos) {
+       this.codigo = codigo;
         this.fechaIngreso = fechaIngreso;
         this.horaIngreso = horaIngreso;
         this.diagnostico = diagnostico;
-        this.theCliente = theCliente;
         this.theBicicleta = theBicicleta;
         this.listTareas = listTareas;
         this.estado = estado;
@@ -56,14 +72,6 @@ public class Orden {
 
     public void setDiagnostico(String diagnostico) {
         this.diagnostico = diagnostico;
-    }
-
-    public Cliente getTheCliente() {
-        return theCliente;
-    }
-
-    public void setTheCliente(Cliente theCliente) {
-        this.theCliente = theCliente;
     }
 
     public Bicicleta getTheBicicleta() {
@@ -104,5 +112,13 @@ public class Orden {
 
     public void setListRepuestos(ArrayList<Repuesto> listRepuestos) {
         this.listRepuestos = listRepuestos;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 }

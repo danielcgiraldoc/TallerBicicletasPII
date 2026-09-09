@@ -2,6 +2,7 @@ package org.example.Model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class Bicicleta implements IHistoriable{
     private String marca;
@@ -11,10 +12,11 @@ public class Bicicleta implements IHistoriable{
     private TipoBicicleta tipoBicicleta;
     private Cliente theCliente;
     private Orden theOrden;
+    private ArrayList<Orden> historialServicios;
 
     //Constructor
 
-    public Bicicleta(String marca, String color, String serial, LocalDate antiguedad, TipoBicicleta tipoBicicleta, Cliente theCliente, Orden theOrden) {
+    public Bicicleta(String marca, String color, String serial, LocalDate antiguedad, TipoBicicleta tipoBicicleta, Cliente theCliente, Orden theOrden){
         this.marca = marca;
         this.color = color;
         this.serial = serial;
@@ -22,6 +24,7 @@ public class Bicicleta implements IHistoriable{
         this.tipoBicicleta = tipoBicicleta;
         this.theCliente = theCliente;
         this.theOrden = theOrden;
+        this.historialServicios = new ArrayList<>();
     }
 
     public Bicicleta(String marca, String color, String serial, LocalDate antiguedad, TipoBicicleta tipoBicicleta) {
@@ -32,12 +35,30 @@ public class Bicicleta implements IHistoriable{
         this.tipoBicicleta = tipoBicicleta;
     }
 
-
+    @Override
+    public String toString() {
+        return "Bicicleta{" +
+                "marca='" + marca + '\'' +
+                ", color='" + color + '\'' +
+                ", serial='" + serial + '\'' +
+                ", antiguedad=" + antiguedad +
+                ", historialServicios=" + historialServicios.stream()
+                .map(Orden::getCodigo)
+                .collect(Collectors.joining(", ")) +
+                '}';
+    }
 
     @Override
-    public ArrayList<Object> regsitrarHistorial(String codigo) {
-        return null;
+    public void agregarAlHistorial(Orden orden) {
+    historialServicios.add(orden);
     }
+
+    @Override
+    public ArrayList<Orden> getHistorial() {
+        return historialServicios;
+    }
+
+
 
 
 
@@ -98,6 +119,7 @@ public class Bicicleta implements IHistoriable{
     public void setTheOrden(Orden theOrden) {
         this.theOrden = theOrden;
     }
+
 
 
 }

@@ -1,6 +1,7 @@
 package org.example.Model;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class Cliente {
 
@@ -9,9 +10,22 @@ public class Cliente {
     private String telefono;
     private String direccion;
     private ArrayList<Bicicleta> listBicicletas;
-    private  ArrayList<Orden> listOrdenes;
+
 
     //Contructor
+
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "nombre='" + nombre + '\'' +
+                ", id='" + id + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", direccion='" + direccion + '\'' +
+                ", bicicletas=" + listBicicletas.stream()
+                .map(Bicicleta::getSerial)
+                .collect(Collectors.joining(", ")) +
+                '}';
+    }
 
 
     public Cliente(String nombre, String id, String telefono, String direccion) {
@@ -19,17 +33,10 @@ public class Cliente {
         this.id = id;
         this.telefono = telefono;
         this.direccion = direccion;
+        this.listBicicletas = new ArrayList<>();
     }
 
-    public Cliente(String nombre, String id, String telefono, String direccion,
-                   ArrayList<Bicicleta> listBicicletas, ArrayList<Orden> listOrdenes) {
-        this.nombre = nombre;
-        this.id = id;
-        this.telefono = telefono;
-        this.direccion = direccion;
-        this.listBicicletas = new ArrayList<>();
-        this.listOrdenes = new ArrayList<>();
-    }
+
 
 
 
@@ -78,11 +85,5 @@ public class Cliente {
         this.listBicicletas = listBicicletas;
     }
 
-    public ArrayList<Orden> getListOrdenes() {
-        return listOrdenes;
-    }
 
-    public void setListOrdenes(ArrayList<Orden> listOrdenes) {
-        this.listOrdenes = listOrdenes;
-    }
 }

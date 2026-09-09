@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public interface IHistoriable {
 
-    ArrayList<Object> regsitrarHistorial(String codigo);
+    void agregarAlHistorial(Orden orden);
+    ArrayList<Orden> getHistorial();
 
 }

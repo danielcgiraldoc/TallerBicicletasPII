@@ -2,7 +2,8 @@ package org.example.Model;
 
 import java.util.ArrayList;
 
-public class Repuesto implements IDisponible {
+public class Repuesto  {
+
     private String nombre;
     private int cantidad;
     private int costo;
@@ -16,10 +17,6 @@ public class Repuesto implements IDisponible {
         this.listOrdenes = new ArrayList<>();
     }
 
-    @Override
-    public boolean verDisponibilidad(String codigo) {
-        return false;
-    }
 
   //Gtt & Stt
 
