@@ -10,6 +10,7 @@ public class Orden {
     private LocalTime horaIngreso;
     private String diagnostico;
     private Bicicleta theBicicleta;
+    private String motivoServicio;
     private ArrayList<Tarea> listTareas;
     private EstadoOrden estado;
     private ArrayList<Mecanico> listMecanicos;
@@ -22,6 +23,7 @@ public class Orden {
                 ", fechaIngreso=" + fechaIngreso +
                 ", horaIngreso=" + horaIngreso +
                 ", diagnostico='" + diagnostico + '\'' +
+                ", motivoServicio='" + motivoServicio + '\'' +
                 ", cliente=" + (theBicicleta.getTheCliente().getNombre() +
                 ", bicicleta=" + (theBicicleta != null ? theBicicleta.getMarca() : "null") +
                 ", tareas=" + listTareas.size() +
@@ -29,33 +31,33 @@ public class Orden {
                 ", mecanicos=" + listMecanicos.size() +
                 ", repuestos=" + listRepuestos.size());
     }
-    
 
 
     //Contructor
 
-    public Orden(String codigo, LocalDate fechaIngreso, LocalTime horaIngreso, String diagnostico, Bicicleta theBicicleta, ArrayList<Tarea> listTareas, EstadoOrden estado, ArrayList<Mecanico> listMecanicos, ArrayList<Repuesto> listRepuestos) {
-       this.codigo = codigo;
+    public Orden(String codigo, LocalDate fechaIngreso, LocalTime horaIngreso, String diagnostico, String motivoServicio, Bicicleta theBicicleta, ArrayList<Tarea> listTareas, EstadoOrden estado, ArrayList<Mecanico> listMecanicos, ArrayList<Repuesto> listRepuestos) {
+        this.codigo = codigo;
         this.fechaIngreso = fechaIngreso;
         this.horaIngreso = horaIngreso;
         this.diagnostico = diagnostico;
         this.theBicicleta = theBicicleta;
         this.listTareas = listTareas;
         this.estado = estado;
+        this.motivoServicio = motivoServicio;
         this.listMecanicos = new ArrayList<>();
         this.listRepuestos = new ArrayList<>();
     }
 
-int calcularCostoTotal(){
+    int calcularCostoTotal() {
         int total = 0;
-        for (Repuesto r : listRepuestos){
+        for (Repuesto r : listRepuestos) {
             total += r.getCosto();
         }
-        for (Tarea t : listTareas){
+        for (Tarea t : listTareas) {
             total += t.getCosto();
         }
         return total;
-}
+    }
 
     //Gtt && Stt
 
@@ -82,6 +84,14 @@ int calcularCostoTotal(){
 
     public void setDiagnostico(String diagnostico) {
         this.diagnostico = diagnostico;
+    }
+
+    public String getMotivoServicio() {
+        return motivoServicio;
+    }
+
+    public void setMotivoServicio(String motivoServicio) {
+        this.motivoServicio = motivoServicio;
     }
 
     public Bicicleta getTheBicicleta() {
