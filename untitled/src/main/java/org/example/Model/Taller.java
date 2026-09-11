@@ -306,7 +306,7 @@ public boolean eliminarOrden(String codigo) {
     }
     return false;
 }
-//lo que hace que la orden tenga algo
+//crud tarea en funcion a la orden
 public boolean agregarTareaAOrden(String codigoOrden, String nombre, String descripcion, int costo) {
     int posOrden = buscarOrdenByCodigo(codigoOrden);
     if (posOrden == -1) {
@@ -319,7 +319,56 @@ public boolean agregarTareaAOrden(String codigoOrden, String nombre, String desc
     orden.calcularCostoTotal();
     return true;
 }
+    public String mostrarTareasDeOrden(String codigoOrden) {
+        int pos = buscarOrdenByCodigo(codigoOrden);
+        if (pos == -1) {
+            return "Orden no encontrada";
+        }
+        Orden orden = listOrdenes.get(pos);
+        if (orden.getListTareas().isEmpty()) {
+            return "No hay tareas en esta orden";
+        }
+        String lista = "";
+        for (Tarea t : orden.getListTareas()) {
+            lista += "Tarea: " + t.getNombre() + "  Costo: " + t.getCosto() + "\n";
+        }
+        return lista; }
 
+    public boolean actualizarTareaEnOrden(String codigoOrden, String nombreAntiguo, String nuevoNombre, String nuevaDescripcion, int nuevoCosto) {
+        int pos = buscarOrdenByCodigo(codigoOrden);
+        if (pos == -1) {
+            return false;
+        }
+        Orden orden = listOrdenes.get(pos);
+        for (Tarea t : orden.getListTareas()) {
+            if (t.getNombre().equals(nombreAntiguo)) {
+                t.setNombre(nuevoNombre);
+                t.setDescripcion(nuevaDescripcion);
+                t.setCosto(nuevoCosto);
+                orden.calcularCostoTotal();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean eliminarTareaDeOrden(String codigoOrden, String nombreTarea) {
+        int pos = buscarOrdenByCodigo(codigoOrden);
+        if (pos == -1) {
+            return false;
+        }
+        Orden orden = listOrdenes.get(pos);
+        for (int i = 0; i < orden.getListTareas().size(); i++) {
+            if (orden.getListTareas().get(i).getNombre().equals(nombreTarea)) {
+                orden.getListTareas().remove(i);
+                orden.calcularCostoTotal();
+                return true;
+            }
+        }
+        return false;
+    }
+
+//CRUD repuesto en funcion a la orden
     public boolean agregarRepuestoAOrden(String codigoOrden, String nombre, int cantidad, int costo) {
         int posOrden = buscarOrdenByCodigo(codigoOrden);
         if (posOrden == -1) {
@@ -338,8 +387,72 @@ public boolean agregarTareaAOrden(String codigoOrden, String nombre, String desc
         return true;
     }
 
+    public String mostrarRepuestosDeOrden(String codigoOrden) {
+        int pos = buscarOrdenByCodigo(codigoOrden);
+        if (pos == -1) {
+            return "Orden no encontrada";
+        }
+        Orden orden = listOrdenes.get(pos);
+        if (orden.getListRepuestos().isEmpty()) {
+            return "No hay repuestos en esta orden";
+        }
+        String lista = "";
+        for (Repuesto r : orden.getListRepuestos()) {
+            lista += "Repuesto: " + r.getNombre() + "  Costo: " + r.getCosto() + "\n";
+        }
+        return lista;
+    }
+    public boolean actualizarRepuestoEnOrden(String codigoOrden, String nombreAntiguo, String nuevoNombre, int nuevaCantidad, int nuevoCosto) {
+        int pos = buscarOrdenByCodigo(codigoOrden);
+        if (pos == -1) {
+            return false;
+        }
+        Orden orden = listOrdenes.get(pos);
+        for (Repuesto r : orden.getListRepuestos()) {
+            if (r.getNombre().equals(nombreAntiguo)) {
+                r.setNombre(nuevoNombre);
+                r.setCantidad(nuevaCantidad);
+                r.setCosto(nuevoCosto);
+                orden.calcularCostoTotal();
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean eliminarRepuestoDeOrden(String codigoOrden, String nombreRepuesto) {
+        int pos = buscarOrdenByCodigo(codigoOrden);
+        if (pos == -1) {
+            return false;
+        }
+        Orden orden = listOrdenes.get(pos);
+        for (int i = 0; i < orden.getListRepuestos().size(); i++) {
+            if (orden.getListRepuestos().get(i).getNombre().equals(nombreRepuesto)) {
+                orden.getListRepuestos().remove(i);
+                orden.calcularCostoTotal();
+                return true;
+            }
+        }
+        return false;
+    }
 
+//las otras funcionalidades requeridaas
+public ArrayList<Orden> verHistorialBicicleta(String serial) {
+    int pos = buscarBicicletaByCodigo(serial);
+    if (pos != -1) {
+        return listBicicletas.get(pos).getHistorial();
+    }
+    return new ArrayList<>();
+}
 
+    public ArrayList<Orden> consultarOrdenesPorDia(LocalDate fecha) {
+        ArrayList<Orden> filtradas = new ArrayList<>();
+        for (Orden o : listOrdenes) {
+            if (o.getFechaIngreso().equals(fecha)) {
+                filtradas.add(o);
+            }
+        }
+        return filtradas;
+    }
 
 
 
