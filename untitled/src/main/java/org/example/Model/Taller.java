@@ -454,7 +454,16 @@ public ArrayList<Orden> verHistorialBicicleta(String serial) {
         return filtradas;
     }
 
+//funcionalidad propia
 
+public int aplicarDescuentoFrecuente(Orden orden) {
+    int totalOriginal = orden.calcularCostoTotal();
+    if (orden.getTheBicicleta().getHistorial().size() > 3) {
+        int descuento = (int) (totalOriginal * 0.15);
+        return totalOriginal - descuento;
+    }
+    return totalOriginal;
+}
 
     //Gett & Sett
 
