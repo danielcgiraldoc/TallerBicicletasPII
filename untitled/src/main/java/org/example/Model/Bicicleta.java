@@ -33,6 +33,7 @@ public class Bicicleta implements IHistoriable{
         this.serial = serial;
         this.antiguedad = antiguedad;
         this.tipoBicicleta = tipoBicicleta;
+        this.historialServicios = new ArrayList<>();
     }
 
     @Override

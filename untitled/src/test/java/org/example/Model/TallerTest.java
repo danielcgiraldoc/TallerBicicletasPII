@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TallerTest {
@@ -12,52 +13,144 @@ class TallerTest {
 
     @BeforeEach
     void setUp() {
-        taller = new Taller("12", "Super Bicis", "Cra 50");
+        taller = new Taller("1", "Taller", "Dir");
+
+        Cliente cliente = new Cliente("Luis", "1", "111", "Dir");
+        taller.addCliente(cliente);
+        taller.registrarBicicleta("GW", "Rojo", "1", LocalDate.now(), TipoBicicleta.MTB, cliente);
+        taller.registrarMecanico("Pedro", "1", true);
+
+        taller.crearOrdenDeServicio("1", LocalDate.now(), LocalTime.now(), "Rev", "Diag", "1", "1");
     }
 
     @Test
-    void testRegistrarCliente() {
-        assertTrue(taller.registrarCliente("Maria", "1010", "3200000000", "Calle 10"));
-        assertFalse(taller.registrarCliente("Maria 2", "1010", "3333", "Otra")); // Duplicado
-    }
-
-    @Test
-    void testBuscarCliente() {
-        taller.registrarCliente("Maria", "1010", "320", "Dir");
-        assertEquals(0, taller.buscarClienteById("1010"));
-        assertEquals(-1, taller.buscarClienteById("9999"));
+    void testRegistrarYBuscarCliente() {
+        assertTrue(taller.registrarCliente("Ana", "2", "222", "Dir"));
+        assertFalse(taller.registrarCliente("Ana 2", "2", "333", "Dir"));
+        
+        assertEquals(0, taller.buscarClienteById("1"));
+        assertEquals(-1, taller.buscarClienteById("9"));
     }
 
     @Test
     void testActualizarCliente() {
-        taller.registrarCliente("Maria", "1010", "320", "Dir");
-        assertTrue(taller.actualizarCliente("Maria Gomez", "1010", "300111"));
-        assertEquals("Maria Gomez", taller.mostrarCliente("1010").getNombre());
+        assertTrue(taller.actualizarCliente("Luis P", "1", "333"));
+        assertEquals("Luis P", taller.mostrarCliente("1").getNombre());
     }
 
     @Test
-    void testRegistrarBicicleta() {
-        Cliente cliente = new Cliente("Luis", "2020", "123", "Dir");
-        taller.addCliente(cliente);
+    void testRegistrarBicicletaYMecanico() {
+        Cliente cliente = taller.mostrarCliente("1");
+        assertTrue(taller.registrarBicicleta("Trek", "Azul", "2", LocalDate.now(), TipoBicicleta.MTB, cliente));
         
-        assertTrue(taller.registrarBicicleta("Giant", "Blanco", "G123", LocalDate.now(), TipoBicicleta.URBANA, cliente));
-        assertFalse(taller.registrarBicicleta("Giant", "Blanco", "G123", LocalDate.now(), TipoBicicleta.URBANA, cliente)); // Duplicado
+        assertTrue(taller.registrarMecanico("Juan", "2", true));
+        assertFalse(taller.registrarMecanico("Juan 2", "2", true));
     }
 
     @Test
-    void testRegistrarMecanico() {
-        assertTrue(taller.registrarMecanico("Pedro", "M001", true));
-        assertFalse(taller.registrarMecanico("Pablo", "M001", true)); // Duplicado
+    void testBuscarOrden() {
+        assertEquals(0, taller.buscarOrdenByCodigo("1"));
+        assertEquals(-1, taller.buscarOrdenByCodigo("9"));
     }
-    
+
     @Test
-    void testCrearOrdenDeServicio() {
-        Cliente cliente = new Cliente("Luis", "2020", "123", "Dir");
-        taller.addCliente(cliente);
-        taller.registrarBicicleta("Giant", "Blanco", "G123", LocalDate.now(), TipoBicicleta.URBANA, cliente);
-        taller.registrarMecanico("Pedro", "M001", true);
+    void testActualizarOrden() {
+        assertTrue(taller.actualizarOrden("1", "Mant", "Diag", EstadoOrden.EN_PROCESO));
+        Orden orden = taller.getListOrdenes().get(0);
+        assertEquals("Mant", orden.getMotivoServicio());
+        assertEquals(EstadoOrden.EN_PROCESO, orden.getEstado());
+    }
+
+    @Test
+    void testEliminarOrden() {
+        assertTrue(taller.eliminarOrden("1"));
+        assertEquals(-1, taller.buscarOrdenByCodigo("1"));
+        assertFalse(taller.eliminarOrden("9"));
+    }
+
+    @Test
+    void testAgregarYMostrarTareaAOrden() {
+        assertTrue(taller.agregarTareaAOrden("1", "T1", "Desc", 10));
+        assertFalse(taller.agregarTareaAOrden("9", "T1", "Desc", 10));
         
-        assertTrue(taller.crearOrdenDeServicio("O1", LocalDate.now(), LocalTime.now(), "Revision", "Todo bien", "G123", "M01"));
-        assertFalse(taller.crearOrdenDeServicio("O1", LocalDate.now(), LocalTime.now(), "Rev", "Mal", "G123", "M01"));
+        String tareas = taller.mostrarTareasDeOrden("1");
+        assertTrue(tareas.contains("T1"));
+    }
+
+    @Test
+    void testActualizarTareaEnOrden() {
+        taller.agregarTareaAOrden("1", "T1", "Desc", 10);
+        assertTrue(taller.actualizarTareaEnOrden("1", "T1", "T1 Mod", "Desc", 20));
+        
+        Orden orden = taller.getListOrdenes().get(0);
+        assertEquals(20, orden.getListTareas().get(0).getCosto());
+    }
+
+    @Test
+    void testEliminarTareaDeOrden() {
+        taller.agregarTareaAOrden("1", "T1", "Desc", 10);
+        assertTrue(taller.eliminarTareaDeOrden("1", "T1"));
+        assertFalse(taller.eliminarTareaDeOrden("1", "T1"));
+    }
+
+    @Test
+    void testAgregarYMostrarRepuestoAOrden() {
+        assertTrue(taller.agregarRepuestoAOrden("1", "R1", 1, 5));
+        String repuestos = taller.mostrarRepuestosDeOrden("1");
+        assertTrue(repuestos.contains("R1"));
+    }
+
+    @Test
+    void testActualizarRepuestoEnOrden() {
+        taller.agregarRepuestoAOrden("1", "R1", 1, 5);
+        assertTrue(taller.actualizarRepuestoEnOrden("1", "R1", "R1 Mod", 2, 8));
+        
+        Orden orden = taller.getListOrdenes().get(0);
+        assertEquals(8, orden.getListRepuestos().get(0).getCosto());
+    }
+
+    @Test
+    void testEliminarRepuestoDeOrden() {
+        taller.agregarRepuestoAOrden("1", "R1", 1, 5);
+        assertTrue(taller.eliminarRepuestoDeOrden("1", "R1"));
+    }
+
+    @Test
+    void testVerHistorialBicicleta() {
+        ArrayList<Orden> historial = taller.verHistorialBicicleta("1");
+        assertEquals(1, historial.size());
+        assertEquals("1", historial.get(0).getCodigo());
+    }
+
+    @Test
+    void testConsultarOrdenesPorDia() {
+        ArrayList<Orden> ordenesHoy = taller.consultarOrdenesPorDia(LocalDate.now());
+        assertEquals(1, ordenesHoy.size());
+        
+        ArrayList<Orden> ordenesAyer = taller.consultarOrdenesPorDia(LocalDate.now().minusDays(1));
+        assertEquals(0, ordenesAyer.size());
+    }
+
+    @Test
+    void testAplicarDescuentoFrecuente_SinDescuento() {
+        Orden orden = taller.getListOrdenes().get(0);
+        taller.agregarTareaAOrden("1", "T1", "Desc", 100);
+        
+        int costoFinal = taller.aplicarDescuentoFrecuente(orden);
+        assertEquals(100, costoFinal);
+    }
+
+    @Test
+    void testAplicarDescuentoFrecuente_ConDescuento() {
+        Orden orden = taller.getListOrdenes().get(0);
+        taller.agregarTareaAOrden("1", "T1", "Desc", 100);
+        
+        Bicicleta bici = orden.getTheBicicleta();
+        bici.agregarAlHistorial(new Orden("2", null, null, null, null, null, null, null, null, null));
+        bici.agregarAlHistorial(new Orden("3", null, null, null, null, null, null, null, null, null));
+        bici.agregarAlHistorial(new Orden("4", null, null, null, null, null, null, null, null, null));
+        
+        int costoFinal = taller.aplicarDescuentoFrecuente(orden);
+        assertEquals(85, costoFinal);
     }
 }

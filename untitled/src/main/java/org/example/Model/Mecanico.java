@@ -24,7 +24,7 @@ public class Mecanico implements IDisponible{
         this.nombre = nombre;
         this.codigo = codigo;
         this.disponible = disponible;
-
+        this.listOrdenes = new ArrayList<>();
     }
 
 
