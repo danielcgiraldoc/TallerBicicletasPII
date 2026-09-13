@@ -11,7 +11,7 @@ public class Mecanico implements IDisponible{
     private Especialidad especialidad;
 
 
-    //Contructor
+    //Constructor
 
     public Mecanico(String nombre, String codigo, boolean disponible,  ArrayList<Orden> listOrdenes, Especialidad especialidad) {
         this.nombre = nombre;

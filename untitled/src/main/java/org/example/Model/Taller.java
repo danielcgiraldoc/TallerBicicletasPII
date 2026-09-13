@@ -266,7 +266,7 @@ public boolean crearOrdenDeServicio(String codigo, LocalDate fecha, LocalTime ho
     ArrayList<Mecanico> mecas = new ArrayList<>();
     mecas.add(meca);
 
-    Orden nuevaOrden = new Orden(codigo, fecha, horaIngreso, motivo, diagnostico, bici, new ArrayList<>(), EstadoOrden.RECIBIDO, mecas, new ArrayList<>());
+    Orden nuevaOrden = new Orden(codigo, fecha, horaIngreso, diagnostico, motivo, bici, new ArrayList<>(), EstadoOrden.RECIBIDO, mecas, new ArrayList<>());
 
     bici.setTheOrden(nuevaOrden);
     bici.agregarAlHistorial(nuevaOrden);
