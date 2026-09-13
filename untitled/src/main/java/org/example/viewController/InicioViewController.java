@@ -1,22 +1,30 @@
 package org.example.viewController;
 
+import javafx.fxml.FXML;
+
 public class InicioViewController {
 
-    public void abrirClientes() {
+    @FXML
+    private void abrirClientes() {
     }
 
-    public void abrirBicicletas() {
+    @FXML
+    private void abrirBicicletas() {
     }
 
-    public void abrirMecanicos() {
+    @FXML
+    private void abrirMecanicos() {
     }
 
-    public void abrirNuevaOrden() {
+    @FXML
+    private void abrirNuevaOrden() {
     }
 
-    public void abrirHistorial() {
+    @FXML
+    private void abrirHistorial() {
     }
 
-    public void abrirOrdenesDia() {
+    @FXML
+    private void abrirOrdenesDia() {
     }
 }
