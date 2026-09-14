@@ -88,7 +88,7 @@ public class Taller {
 
             }
         }
-        return "No hay clientes registrados";
+        return lista.isEmpty() ? "No hay clientes registrados" : lista;
     }
 
     //Update

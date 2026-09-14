@@ -39,6 +39,58 @@ class TallerTest {
     }
 
     @Test
+    void testMostrarCliente() {
+        assertNotNull(taller.mostrarCliente("1"));
+        assertEquals("Luis", taller.mostrarCliente("1").getNombre());
+        assertNull(taller.mostrarCliente("9"));
+    }
+
+    @Test
+    void testMostrarListaClientes() {
+        String lista = taller.mostrarListaClientes();
+        assertTrue(lista.contains("Luis"));
+        
+        Taller tallerVacio = new Taller("2", "Taller 2", "Dir 2");
+        assertEquals("No hay clientes registrados", tallerVacio.mostrarListaClientes());
+    }
+
+    @Test
+    void testEliminarCliente() {
+        assertTrue(taller.eliminarCliente("1"));
+        assertNull(taller.mostrarCliente("1"));
+        assertFalse(taller.eliminarCliente("9"));
+    }
+
+    @Test
+    void testMostrarMecanico() {
+        assertNotNull(taller.mostrarMecanico("1"));
+        assertEquals("Pedro", taller.mostrarMecanico("1").getNombre());
+        assertNull(taller.mostrarMecanico("9"));
+    }
+
+    @Test
+    void testMostrarListMecanico() {
+        String lista = taller.mostrarListMecanico();
+        assertTrue(lista.contains("Pedro"));
+    }
+
+    @Test
+    void testActualizarMecanico() {
+        assertTrue(taller.actualizarMecanico("Pedro Mod", "1", false));
+        assertEquals("Pedro Mod", taller.mostrarMecanico("1").getNombre());
+        assertFalse(taller.mostrarMecanico("1").estaDisponible());
+        
+        assertFalse(taller.actualizarMecanico("No existe", "9", true));
+    }
+
+    @Test
+    void testEliminarMecanico() {
+        assertTrue(taller.eliminarMecanico("1"));
+        assertNull(taller.mostrarMecanico("1"));
+        assertFalse(taller.eliminarMecanico("9"));
+    }
+
+    @Test
     void testRegistrarBicicletaYMecanico() {
         Cliente cliente = taller.mostrarCliente("1");
         assertTrue(taller.registrarBicicleta("Trek", "Azul", "2", 2, TipoBicicleta.MTB, cliente));
