@@ -11,7 +11,7 @@ class BicicletaTest {
 
     @BeforeEach
     void setUp() {
-        bicicleta = new Bicicleta("Trek", "Rojo", "SN123", LocalDate.of(2022, 1, 1), TipoBicicleta.MTB);
+        bicicleta = new Bicicleta("Trek", "Rojo", "SN123", 4, TipoBicicleta.MTB);
     }
 
     @Test

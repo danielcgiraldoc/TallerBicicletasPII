@@ -7,8 +7,8 @@ import java.util.stream.Collectors;
 public class Bicicleta implements IHistoriable{
     private String marca;
     private String color;
-    private  String serial;
-    private LocalDate antiguedad;
+    private String serial;
+    private int antiguedad;
     private TipoBicicleta tipoBicicleta;
     private Cliente theCliente;
     private Orden theOrden;
@@ -16,7 +16,7 @@ public class Bicicleta implements IHistoriable{
 
     //Constructor
 
-    public Bicicleta(String marca, String color, String serial, LocalDate antiguedad, TipoBicicleta tipoBicicleta, Cliente theCliente, Orden theOrden){
+    public Bicicleta(String marca, String color, String serial, int antiguedad, TipoBicicleta tipoBicicleta, Cliente theCliente, Orden theOrden){
         this.marca = marca;
         this.color = color;
         this.serial = serial;
@@ -27,7 +27,7 @@ public class Bicicleta implements IHistoriable{
         this.historialServicios = new ArrayList<>();
     }
 
-    public Bicicleta(String marca, String color, String serial, LocalDate antiguedad, TipoBicicleta tipoBicicleta) {
+    public Bicicleta(String marca, String color, String serial, int antiguedad, TipoBicicleta tipoBicicleta) {
         this.marca = marca;
         this.color = color;
         this.serial = serial;
@@ -89,11 +89,11 @@ public class Bicicleta implements IHistoriable{
         this.serial = serial;
     }
 
-    public LocalDate getAntiguedad() {
+    public int getAntiguedad() {
         return antiguedad;
     }
 
-    public void setAntiguedad(LocalDate antiguedad) {
+    public void setAntiguedad(int antiguedad) {
         this.antiguedad = antiguedad;
     }
 

@@ -114,7 +114,7 @@ public class Taller {
 
     //CRUD Bicicleta
     //Create
-    public boolean registrarBicicleta(String marco, String color, String serial, LocalDate antiguedad, TipoBicicleta tipoBicicleta, Cliente clienteRelacionado) {
+    public boolean registrarBicicleta(String marco, String color, String serial, int antiguedad, TipoBicicleta tipoBicicleta, Cliente clienteRelacionado) {
         int posicionCliente = buscarClienteById(clienteRelacionado.getId());
         if (posicionCliente == -1) {
             return false;
@@ -165,7 +165,7 @@ public class Taller {
     }
 
     //Update
-    public boolean actualizarBicicleta(String marca, String color, String serial, LocalDate antiguedad, TipoBicicleta tipoBicicleta) {
+    public boolean actualizarBicicleta(String marca, String color, String serial, int antiguedad, TipoBicicleta tipoBicicleta) {
         int posicion = buscarBicicletaByCodigo(serial);
         if (posicion != -1) {
             listBicicletas.get(posicion).setMarca(marca);

@@ -13,7 +13,7 @@ class OrdenTest {
 
     @BeforeEach
     void setUp() {
-        Bicicleta bici = new Bicicleta("Specialized", "Azul", "S001", LocalDate.now(), TipoBicicleta.RUTA);
+        Bicicleta bici = new Bicicleta("Specialized", "Azul", "S001", 3, TipoBicicleta.RUTA);
         orden = new Orden("ORD-1", LocalDate.now(), LocalTime.now(), "Ruidos", "Revision", bici, new ArrayList<>(), EstadoOrden.RECIBIDO, new ArrayList<>(), new ArrayList<>());
     }
 

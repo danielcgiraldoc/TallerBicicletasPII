@@ -71,6 +71,12 @@
                </font>
             </Label>
             <TextField fx:id="txtAntiguedad" maxWidth="350.0" prefHeight="35.0" prefWidth="350.0" />
+            <Label text="Identificación del Cliente">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtIdCliente" maxWidth="350.0" prefHeight="35.0" prefWidth="350.0" />
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
                <children>
                   <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#guardarBicicleta" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #66CDAA; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-border-radius: 10;" text="Guardar">
