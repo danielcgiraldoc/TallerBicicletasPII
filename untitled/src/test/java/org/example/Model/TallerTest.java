@@ -17,7 +17,7 @@ class TallerTest {
 
         Cliente cliente = new Cliente("Luis", "1", "111", "Dir");
         taller.addCliente(cliente);
-        taller.registrarBicicleta("GW", "Rojo", "1", LocalDate.now(), TipoBicicleta.MTB, cliente);
+        taller.registrarBicicleta("GW", "Rojo", "1", 5, TipoBicicleta.MTB, cliente);
         taller.registrarMecanico("Pedro", "1", true);
 
         taller.crearOrdenDeServicio("1", LocalDate.now(), LocalTime.now(), "Rev", "Diag", "1", "1");
@@ -41,7 +41,7 @@ class TallerTest {
     @Test
     void testRegistrarBicicletaYMecanico() {
         Cliente cliente = taller.mostrarCliente("1");
-        assertTrue(taller.registrarBicicleta("Trek", "Azul", "2", LocalDate.now(), TipoBicicleta.MTB, cliente));
+        assertTrue(taller.registrarBicicleta("Trek", "Azul", "2", 2, TipoBicicleta.MTB, cliente));
         
         assertTrue(taller.registrarMecanico("Juan", "2", true));
         assertFalse(taller.registrarMecanico("Juan 2", "2", true));
