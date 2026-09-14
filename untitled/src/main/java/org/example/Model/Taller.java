@@ -241,7 +241,17 @@ public class Taller {
         }
         return false;
     }
+    //Delate
+    public boolean eliminarMecanico(String codigo) {
+        int posicion = buscarMecanicoByCedula(codigo);
 
+        if (posicion != -1) {
+            listMecanicos.set(posicion, null);
+            return true;
+        }
+
+        return false;
+    }
 
 //Create tarea
 public boolean crearTarea(String  nombre, String descripcion, int costo){
