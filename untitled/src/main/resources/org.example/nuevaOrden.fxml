@@ -20,137 +20,163 @@
             <children>
                 <Label style="-fx-text-fill: white; -fx-font-weight: bold;" text="NUEVA ORDEN">
                     <font>
-                        <Font size="28.0" />
+                        <Font size="28.0"/>
                     </font>
                 </Label>
                 <Label style="-fx-text-fill: #FFFAFA;" text="Registrar Orden de Servicio">
                     <font>
-                        <Font size="18.0" />
+                        <Font size="18.0"/>
                     </font>
                 </Label>
             </children>
         </VBox>
     </top>
-   <center>
-      <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <content>
-              <VBox alignment="TOP_CENTER" prefHeight="1348.0" prefWidth="900.0" spacing="10.0" style="-fx-padding: 20;">
-                  <children>
-                  <Label text="Código de Orden">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="txtCodigo" maxWidth="350.0" prefHeight="35.0" prefWidth="350.0" />
-                  <Label text="Bicicleta">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <ComboBox fx:id="cmbBicicleta" prefHeight="35.0" prefWidth="350.0" promptText="Seleccione una bicicleta" />
-      
-                                  <Label text="Fecha de Ingreso">
-                          <font>
-                              <Font size="14.0" />
-                          </font>
-                      </Label>
-                  <DatePicker fx:id="dpFecha" prefHeight="35.0" prefWidth="350.0" />
-                  <Label text="Hora de Ingreso">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="txtHora" maxWidth="350.0" prefHeight="35.0" prefWidth="350.0" />
-                  <Label text="Mecánico">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <ComboBox fx:id="cmbMecanico" prefHeight="35.0" prefWidth="350.0" promptText="Seleccione un mecánico" />
-      
-                                  <Label text="Motivo del Ingreso">
-                          <font>
-                              <Font size="14.0" />
-                          </font>
-                      </Label>
-                      <TextArea fx:id="txtMotivo" maxWidth="350.0" prefHeight="50.0" prefWidth="350.0" wrapText="true" />
-      
-                                  <Label text="Diagnóstico">
-                          <font>
-                              <Font size="14.0" />
-                          </font>
-                      </Label>
-                      <TextArea fx:id="txtDiagnostico" maxWidth="350.0" prefHeight="50.0" prefWidth="350.0" wrapText="true" />
-                  <Label text="Tareas">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
-                     <children>
-                        <Button fx:id="btnATarea" mnemonicParsing="false" onAction="#agregarTarea" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #66CDAA; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-border-radius: 10;" text="Agregar Tarea">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="btnETarea" maxHeight="30.0" mnemonicParsing="false" onAction="#eliminarTarea" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #66CDAA; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-border-radius: 10;" text="Eliminar Tarea">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </HBox>
-                  <TableView fx:id="tablaTareas" maxWidth="350.0" prefHeight="180.0" prefWidth="350.0">
-                    <columns>
-                      <TableColumn fx:id="colNombreTarea" prefWidth="116.0" text="Nombre" />
-                      <TableColumn fx:id="colDescripcionTarea" prefWidth="118.0" text="Descripción" />
-                        <TableColumn fx:id="colCostoTarea" prefWidth="116.0" text="Costo" />
-                    </columns>
-                  </TableView>
-                  <Label text="Repuestos">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
-                     <children>
-                        <Button fx:id="btnARepuesto" mnemonicParsing="false" onAction="#agregarRepuesto" prefHeight="40.0" prefWidth="180.0" style="-fx-background-color: #66CDAA; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-border-radius: 10;" text="Agregar Repuesto">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="btnERepuesto" mnemonicParsing="false" onAction="#eliminarRepuesto" prefHeight="40.0" prefWidth="180.0" style="-fx-background-color: #66CDAA; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-border-radius: 10;" text="Eliminar Repuesto">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </HBox>
-                  <TableView fx:id="tablaRepuestos" maxWidth="350.0" prefHeight="180.0" prefWidth="350.0">
-                    <columns>
-                      <TableColumn fx:id="colNombreRepuesto" prefWidth="152.0" text="Nombre " />
-                      <TableColumn fx:id="colCantidadRepuesto" text="Cantidad" />
-                        <TableColumn fx:id="colCostoRepuesto" prefWidth="116.0" text="Costo" />
-                    </columns>
-                  </TableView>
-      
-                                  <HBox alignment="CENTER" prefHeight="80.0" spacing="30.0">
-                          <children>
-                              <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#guardarOrden" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #66CDAA; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-border-radius: 10;" text="Guardar">
-                                  <font>
-                                      <Font size="18.0" />
-                                  </font>
-                              </Button>
-                              <Button fx:id="btnVolver" mnemonicParsing="false" onAction="#volverInicio" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #66CDAA; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-border-radius: 10;" text="Volver">
-                                  <font>
-                                      <Font size="18.0" />
-                                  </font>
-                              </Button>
-                          </children>
-                      </HBox>
-                  </children>
-              </VBox>
-         </content>
-      </ScrollPane>
-   </center>
+    <center>
+        <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <content>
+                <VBox alignment="TOP_CENTER" prefHeight="1650.0" prefWidth="900.0" spacing="10.0" style="-fx-padding: 20;">
+                    <children>
+                        <Label text="Código de Orden">
+                            <font>
+                                <Font size="14.0"/>
+                            </font>
+                        </Label>
+                        <TextField fx:id="txtCodigo" maxWidth="350.0" prefHeight="35.0" prefWidth="350.0"/>
+                        <Label text="Bicicleta">
+                            <font>
+                                <Font size="14.0"/>
+                            </font>
+                        </Label>
+                        <ComboBox fx:id="cmbBicicleta" prefHeight="35.0" prefWidth="350.0" promptText="Seleccione una bicicleta"/>
+                        <Label text="Fecha de Ingreso">
+                            <font>
+                                <Font size="14.0"/>
+                            </font>
+                        </Label>
+                        <DatePicker fx:id="dpFecha" prefHeight="35.0" prefWidth="350.0"/>
+                        <Label text="Hora de Ingreso">
+                            <font>
+                                <Font size="14.0"/>
+                            </font>
+                        </Label>
+                        <TextField fx:id="txtHora" maxWidth="350.0" prefHeight="35.0" prefWidth="350.0"/>
+                        <Label text="Mecánico">
+                            <font>
+                                <Font size="14.0"/>
+                            </font>
+                        </Label>
+                        <ComboBox fx:id="cmbMecanico" prefHeight="35.0" prefWidth="350.0" promptText="Seleccione un mecánico"/>
+                        <Label text="Motivo del Ingreso">
+                            <font>
+                                <Font size="14.0"/>
+                            </font>
+                        </Label>
+                        <TextArea fx:id="txtMotivo" maxWidth="350.0" prefHeight="50.0" prefWidth="350.0" wrapText="true"/>
+                        <Label text="Diagnóstico">
+                            <font>
+                                <Font size="14.0"/>
+                            </font>
+                        </Label>
+                        <TextArea fx:id="txtDiagnostico" maxWidth="350.0" prefHeight="50.0" prefWidth="350.0" wrapText="true"/>
+                        <Label text="Tareas">
+                            <font>
+                                <Font size="14.0"/>
+                            </font>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                            <children>
+                                <Button fx:id="btnATarea" mnemonicParsing="false" onAction="#agregarTarea" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #66CDAA; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-border-radius: 10;" text="Agregar Tarea">
+                                    <font>
+                                        <Font size="18.0"/>
+                                    </font>
+                                </Button>
+                                <Button fx:id="btnETarea" maxHeight="30.0" mnemonicParsing="false" onAction="#eliminarTarea" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #66CDAA; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-border-radius: 10;" text="Eliminar Tarea">
+                                    <font>
+                                        <Font size="18.0"/>
+                                    </font>
+                                </Button>
+                            </children>
+                        </HBox>
+                        <TableView fx:id="tablaTareas" maxWidth="350.0" prefHeight="180.0" prefWidth="350.0">
+                            <columns>
+                                <TableColumn fx:id="colNombreTarea" prefWidth="116.0" text="Nombre"/>
+                                <TableColumn fx:id="colDescripcionTarea" prefWidth="118.0" text="Descripción"/>
+                                <TableColumn fx:id="colCostoTarea" prefWidth="116.0" text="Costo"/>
+                            </columns>
+                        </TableView>
+                        <Label text="Repuestos">
+                            <font>
+                                <Font size="14.0"/>
+                            </font>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                            <children>
+                                <Button fx:id="btnARepuesto" mnemonicParsing="false" onAction="#agregarRepuesto" prefHeight="40.0" prefWidth="180.0" style="-fx-background-color: #66CDAA; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-border-radius: 10;" text="Agregar Repuesto">
+                                    <font>
+                                        <Font size="18.0"/>
+                                    </font>
+                                </Button>
+                                <Button fx:id="btnERepuesto" mnemonicParsing="false" onAction="#eliminarRepuesto" prefHeight="40.0" prefWidth="180.0" style="-fx-background-color: #66CDAA; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-border-radius: 10;" text="Eliminar Repuesto">
+                                    <font>
+                                        <Font size="18.0"/>
+                                    </font>
+                                </Button>
+                            </children>
+                        </HBox>
+                        <TableView fx:id="tablaRepuestos" maxWidth="350.0" prefHeight="180.0" prefWidth="350.0">
+                            <columns>
+                                <TableColumn fx:id="colNombreRepuesto" prefWidth="152.0" text="Nombre"/>
+                                <TableColumn fx:id="colCantidadRepuesto" text="Cantidad"/>
+                                <TableColumn fx:id="colCostoRepuesto" prefWidth="116.0" text="Costo"/>
+                            </columns>
+                        </TableView>
+                        <Label text="Órdenes registradas">
+                            <font>
+                                <Font size="17.0"/>
+                            </font>
+                        </Label>
+                        <TableView fx:id="tablaOrdenes" prefHeight="200.0" prefWidth="850.0">
+                            <columns>
+                                <TableColumn fx:id="colCodigoOrden" prefWidth="100.0" text="Código"/>
+                                <TableColumn fx:id="colFechaOrden" prefWidth="100.0" text="Fecha"/>
+                                <TableColumn fx:id="colHoraOrden" prefWidth="80.0" text="Hora"/>
+                                <TableColumn fx:id="colBicicletaOrden" prefWidth="100.0" text="Bicicleta"/>
+                                <TableColumn fx:id="colMecanicoOrden" prefWidth="110.0" text="Mecánico"/>
+                                <TableColumn fx:id="colMotivoOrden" prefWidth="150.0" text="Motivo"/>
+                                <TableColumn fx:id="colEstadoOrden" prefWidth="100.0" text="Estado"/>
+                            </columns>
+                        </TableView>
+                        <HBox alignment="CENTER" spacing="20.0" prefHeight="50.0">
+                            <children>
+                                <Button fx:id="btnEditarOrden" mnemonicParsing="false" onAction="#editarOrden" prefHeight="35.0" prefWidth="140.0" style="-fx-background-color: #66CDAA; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-border-radius: 10;" text="Editar">
+                                    <font>
+                                        <Font size="16.0"/>
+                                    </font>
+                                </Button>
+                                <Button fx:id="btnEliminarOrden" mnemonicParsing="false" onAction="#eliminarOrden" prefHeight="35.0" prefWidth="140.0" style="-fx-background-color: #CD5C5C; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-border-radius: 10;" text="Eliminar">
+                                    <font>
+                                        <Font size="16.0"/>
+                                    </font>
+                                </Button>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="80.0" spacing="30.0">
+                            <children>
+                                <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#guardarOrden" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #66CDAA; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-border-radius: 10;" text="Guardar">
+                                    <font>
+                                        <Font size="18.0"/>
+                                    </font>
+                                </Button>
+                                <Button fx:id="btnVolver" mnemonicParsing="false" onAction="#volverInicio" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #66CDAA; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-border-radius: 10;" text="Volver">
+                                    <font>
+                                        <Font size="18.0"/>
+                                    </font>
+                                </Button>
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
 </BorderPane>

@@ -31,4 +31,17 @@ public class BicicletaController {
 
         return taller.registrarBicicleta(marco, color, serial, antiguedad, tipoBicicleta, cliente);
     }
+
+    public Bicicleta buscarBicicleta(String serial) {
+        return taller.mostrarBicicleta(serial);
+    }
+
+    public boolean actualizarBicicleta(String marca, String color, String serial,
+                                       int antiguedad, TipoBicicleta tipoBicicleta) {
+        return taller.actualizarBicicleta(marca, color, serial, antiguedad, tipoBicicleta);
+    }
+
+    public boolean elimarBicicleta(String serial) {
+        return taller.elimarBicicleta(serial);
+    }
 }
