@@ -95,6 +95,15 @@ public class NuevaOrdenViewController {
 
         colEstadoOrden.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getEstado() != null ? data.getValue().getEstado().toString() : ""));
 
+        colCostoTotal.setCellValueFactory(data -> {
+            Orden orden = data.getValue();
+            int total = ordenController.getTaller().aplicarDescuentoFrecuente(orden);
+            if (orden.getTheBicicleta() != null && orden.getTheBicicleta().getHistorial() != null && orden.getTheBicicleta().getHistorial().size() > 3) {
+                return new SimpleStringProperty(total + " (-15%)");
+            }
+            return new SimpleStringProperty(String.valueOf(total));
+        });
+
         cargarOrdenes();
     }
 
@@ -173,6 +182,9 @@ public class NuevaOrdenViewController {
     @FXML
     private TableColumn<Orden, String> colEstadoOrden;
 
+    @FXML
+    private TableColumn<Orden, String> colCostoTotal;
+
     // Botones
     @FXML
     private void agregarTarea() throws IOException {
@@ -184,6 +196,7 @@ public class NuevaOrdenViewController {
         TareaViewController controller = fxmlLoader.getController();
 
         Stage ventana = new Stage();
+        ventana.setResizable(false);
         ventana.setTitle("Agregar tarea");
         ventana.setScene(scene);
 
@@ -211,6 +224,7 @@ public class NuevaOrdenViewController {
         controller.prepararEdicion(tarea);
 
         Stage ventana = new Stage();
+        ventana.setResizable(false);
         ventana.setTitle("Editar tarea");
         ventana.setScene(scene);
         ventana.showAndWait();
@@ -244,6 +258,7 @@ public class NuevaOrdenViewController {
         RepuestoViewController controller = fxmlLoader.getController();
 
         Stage ventana = new Stage();
+        ventana.setResizable(false);
         ventana.setTitle("Agregar repuesto");
         ventana.setScene(scene);
 
@@ -272,6 +287,7 @@ public class NuevaOrdenViewController {
         controller.prepararEdicion(repuesto);
 
         Stage ventana = new Stage();
+        ventana.setResizable(false);
         ventana.setTitle("Editar repuesto");
         ventana.setScene(scene);
 

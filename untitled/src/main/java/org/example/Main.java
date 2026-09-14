@@ -321,6 +321,7 @@ public class Main extends Application {
 
         stage.setTitle("Taller de Bicicletas");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 

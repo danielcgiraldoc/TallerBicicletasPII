@@ -144,6 +144,7 @@
                                 <TableColumn fx:id="colMecanicoOrden" prefWidth="110.0" text="Mecánico"/>
                                 <TableColumn fx:id="colMotivoOrden" prefWidth="150.0" text="Motivo"/>
                                 <TableColumn fx:id="colEstadoOrden" prefWidth="100.0" text="Estado"/>
+                                <TableColumn fx:id="colCostoTotal" prefWidth="100.0" text="Costo Total"/>
                             </columns>
                         </TableView>
                         <HBox alignment="CENTER" spacing="20.0" prefHeight="50.0">

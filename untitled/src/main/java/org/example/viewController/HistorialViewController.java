@@ -119,22 +119,12 @@ public class HistorialViewController {
         });
 
         colCosto.setCellValueFactory(data -> {
-
-            int total = 0;
-
-            if (data.getValue().getListTareas() != null) {
-                for (Tarea tarea : data.getValue().getListTareas()) {
-                    total += tarea.getCosto();
-                }
+            Orden orden = data.getValue();
+            int total = ordenController.getTaller().aplicarDescuentoFrecuente(orden);
+            if (orden.getTheBicicleta() != null && orden.getTheBicicleta().getHistorial() != null && orden.getTheBicicleta().getHistorial().size() > 3) {
+                return new SimpleStringProperty(total + " (-15%)");
             }
-            if (data.getValue().getListRepuestos() != null) {
-                for (Repuesto repuesto : data.getValue().getListRepuestos()) {
-                    total += repuesto.getCosto();
-                }
-            }
-            return new SimpleStringProperty(
-                    String.valueOf(total)
-            );
+            return new SimpleStringProperty(String.valueOf(total));
         });
     }
 

@@ -46,6 +46,7 @@
                         <TableColumn fx:id="colCliente" prefWidth="150.0" text="Cliente" />
                         <TableColumn fx:id="colMotivo" prefWidth="150.0" text="Motivo" />
                   <TableColumn fx:id="colEstado" prefWidth="150.0" text="Estado" />
+                  <TableColumn fx:id="colCostoTotal" prefWidth="100.0" text="Costo Total" />
                     </columns>
                 </TableView>
 

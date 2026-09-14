@@ -53,6 +53,9 @@ public class OrdenDiaViewController {
     @FXML
     private TableColumn<Orden, String> colEstado;
 
+    @FXML
+    private TableColumn<Orden, String> colCostoTotal;
+
 
     @FXML
     private void initialize() {
@@ -103,6 +106,15 @@ public class OrdenDiaViewController {
         colMotivo.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getMotivoServicio()));
 
         colEstado.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getEstado().toString()));
+
+        colCostoTotal.setCellValueFactory(data -> {
+            Orden orden = data.getValue();
+            int total = ordenController.getTaller().aplicarDescuentoFrecuente(orden);
+            if (orden.getTheBicicleta() != null && orden.getTheBicicleta().getHistorial() != null && orden.getTheBicicleta().getHistorial().size() > 3) {
+                return new SimpleStringProperty(total + " (-15%)");
+            }
+            return new SimpleStringProperty(String.valueOf(total));
+        });
     }
 
     @FXML
