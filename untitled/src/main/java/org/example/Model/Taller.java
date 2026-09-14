@@ -295,6 +295,13 @@ public int buscarOrdenByCodigo(String codigo) {
     }
     return -1;
 }
+    public Orden mostrarOrden(String codigo) {
+        int posicion = buscarOrdenByCodigo(codigo);
+        if (posicion != -1) {
+            return listOrdenes.get(posicion);
+        }
+        return null;
+    }
 
 //update
 public boolean actualizarOrden(String codigo, String motivoServicio, String diagnostico, EstadoOrden estado) {

@@ -44,7 +44,7 @@ public class Orden {
         this.listTareas = listTareas;
         this.estado = estado;
         this.motivoServicio = motivoServicio;
-        this.listMecanicos = new ArrayList<>();
+        this.listMecanicos = listMecanicos;
         this.listRepuestos = new ArrayList<>();
     }
 
