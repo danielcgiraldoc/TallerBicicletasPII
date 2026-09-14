@@ -11,13 +11,14 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.example.Main;
 import org.example.Model.Bicicleta;
+import org.example.Model.EstadoOrden;
 import org.example.Model.Mecanico;
+import org.example.Model.Orden;
 import org.example.Model.Repuesto;
 import org.example.Model.Tarea;
 import org.example.controller.OrdenController;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 
 import java.io.IOException;
 import java.time.LocalTime;
@@ -30,6 +31,8 @@ public class NuevaOrdenViewController {
     private ObservableList<Tarea> tareas = FXCollections.observableArrayList();
     private ObservableList<Repuesto> repuestos = FXCollections.observableArrayList();
 
+    private Orden ordenEditar;
+
     @FXML
     private void initialize() {
         cmbBicicleta.setItems(FXCollections.observableArrayList(ordenController.obtenerBicicletas().stream().map(Bicicleta::getSerial).toList()));
@@ -38,11 +41,11 @@ public class NuevaOrdenViewController {
 
         tablaTareas.setItems(tareas);
 
-        colNombreTarea.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getNombre()));
+        colNombreTarea.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNombre()));
 
-        colDescripcionTarea.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getDescripcion()));
+        colDescripcionTarea.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDescripcion()));
 
-        colCostoTarea.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getCosto()));
+        colCostoTarea.setCellValueFactory(data -> new SimpleObjectProperty<>(data.getValue().getCosto()));
 
         tablaTareas.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
@@ -50,7 +53,7 @@ public class NuevaOrdenViewController {
                 if (tareaSeleccionada != null) {
                     try {
                         editarTarea(tareaSeleccionada);
-                    }catch (IOException e) {
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
@@ -59,11 +62,11 @@ public class NuevaOrdenViewController {
 
         tablaRepuestos.setItems(repuestos);
 
-        colNombreRepuesto.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getNombre()));
+        colNombreRepuesto.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNombre()));
 
-        colCantidadRepuesto.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getCantidad()));
+        colCantidadRepuesto.setCellValueFactory(data -> new SimpleObjectProperty<>(data.getValue().getCantidad()));
 
-        colCostoRepuesto.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getCosto()));
+        colCostoRepuesto.setCellValueFactory(data -> new SimpleObjectProperty<>(data.getValue().getCosto()));
 
         tablaRepuestos.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
@@ -77,6 +80,26 @@ public class NuevaOrdenViewController {
                 }
             }
         });
+
+        colCodigoOrden.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getCodigo()));
+
+        colFechaOrden.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getFechaIngreso().toString()));
+
+        colHoraOrden.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getHoraIngreso().toString()));
+
+        colBicicletaOrden.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getTheBicicleta() != null ? data.getValue().getTheBicicleta().getSerial() : ""));
+
+        colMecanicoOrden.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getListMecanicos() != null && !data.getValue().getListMecanicos().isEmpty() ? data.getValue().getListMecanicos().get(0).getNombre() : ""));
+
+        colMotivoOrden.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getMotivoServicio()));
+
+        colEstadoOrden.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getEstado() != null ? data.getValue().getEstado().toString() : ""));
+
+        cargarOrdenes();
+    }
+
+    private void cargarOrdenes() {
+        tablaOrdenes.getItems().setAll(ordenController.getTaller().getListOrdenes().stream().filter(orden -> orden != null).toList());
     }
 
     // Datos
@@ -100,7 +123,6 @@ public class NuevaOrdenViewController {
 
     @FXML
     private TextArea txtDiagnostico;
-
 
     // Tablas
     @FXML
@@ -126,6 +148,30 @@ public class NuevaOrdenViewController {
 
     @FXML
     private TableColumn<Repuesto, Integer> colCostoRepuesto;
+
+    @FXML
+    private TableView<Orden> tablaOrdenes;
+
+    @FXML
+    private TableColumn<Orden, String> colCodigoOrden;
+
+    @FXML
+    private TableColumn<Orden, String> colFechaOrden;
+
+    @FXML
+    private TableColumn<Orden, String> colHoraOrden;
+
+    @FXML
+    private TableColumn<Orden, String> colBicicletaOrden;
+
+    @FXML
+    private TableColumn<Orden, String> colMecanicoOrden;
+
+    @FXML
+    private TableColumn<Orden, String> colMotivoOrden;
+
+    @FXML
+    private TableColumn<Orden, String> colEstadoOrden;
 
     // Botones
     @FXML
@@ -184,6 +230,7 @@ public class NuevaOrdenViewController {
             alerta.showAndWait();
             return;
         }
+
         tareas.remove(tareaSeleccionada);
     }
 
@@ -248,7 +295,76 @@ public class NuevaOrdenViewController {
 
             return;
         }
+
         repuestos.remove(repuestoSeleccionado);
+    }
+
+    @FXML
+    private void editarOrden() {
+
+        Orden seleccionada = tablaOrdenes.getSelectionModel().getSelectedItem();
+
+        if (seleccionada == null) {
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Orden no seleccionada");
+            alerta.setHeaderText(null);
+            alerta.setContentText("Selecciona una orden de la tabla.");
+            alerta.showAndWait();
+            return;
+        }
+
+        ordenEditar = seleccionada;
+
+        txtCodigo.setText(seleccionada.getCodigo());
+        dpFecha.setValue(seleccionada.getFechaIngreso());
+        txtHora.setText(seleccionada.getHoraIngreso().toString());
+        txtMotivo.setText(seleccionada.getMotivoServicio());
+        txtDiagnostico.setText(seleccionada.getDiagnostico());
+
+        if (seleccionada.getTheBicicleta() != null) {
+            cmbBicicleta.setValue(seleccionada.getTheBicicleta().getSerial());
+        }
+
+        if (seleccionada.getListMecanicos() != null &&
+                !seleccionada.getListMecanicos().isEmpty()) {
+            cmbMecanico.setValue(seleccionada.getListMecanicos().get(0).getCodigo());
+        }
+
+        tareas.clear();
+        tareas.addAll(seleccionada.getListTareas());
+
+        repuestos.clear();
+        repuestos.addAll(seleccionada.getListRepuestos());
+
+        tablaTareas.refresh();
+        tablaRepuestos.refresh();
+    }
+
+    @FXML
+    private void eliminarOrden() {
+
+        Orden seleccionada = tablaOrdenes.getSelectionModel().getSelectedItem();
+
+        if (seleccionada == null) {
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Orden no seleccionada");
+            alerta.setHeaderText(null);
+            alerta.setContentText("Selecciona una orden de la tabla.");
+            alerta.showAndWait();
+            return;
+        }
+
+        boolean eliminado = ordenController.eliminarOrden(seleccionada.getCodigo());
+
+        if (eliminado) {
+            tablaOrdenes.getItems().remove(seleccionada);
+
+            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+            alerta.setTitle("Orden eliminada");
+            alerta.setHeaderText(null);
+            alerta.setContentText("La orden se eliminó correctamente.");
+            alerta.showAndWait();
+        }
     }
 
     @FXML
@@ -288,6 +404,47 @@ public class NuevaOrdenViewController {
             return;
         }
 
+        if (ordenEditar != null) {
+
+            boolean actualizado = ordenController.actualizarOrden(
+                    ordenEditar.getCodigo(),
+                    motivo,
+                    diagnostico,
+                    ordenEditar.getEstado()
+            );
+
+            if (actualizado) {
+
+                ordenEditar.getListTareas().clear();
+                ordenEditar.getListTareas().addAll(tareas);
+
+                ordenEditar.getListRepuestos().clear();
+                ordenEditar.getListRepuestos().addAll(repuestos);
+
+                Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+                alerta.setTitle("Orden actualizada");
+                alerta.setHeaderText(null);
+                alerta.setContentText("La orden se actualizó correctamente.");
+                alerta.showAndWait();
+
+                ordenEditar = null;
+
+                txtCodigo.clear();
+                dpFecha.setValue(null);
+                txtHora.clear();
+                txtMotivo.clear();
+                txtDiagnostico.clear();
+                cmbBicicleta.setValue(null);
+                cmbMecanico.setValue(null);
+                tareas.clear();
+                repuestos.clear();
+
+                cargarOrdenes();
+            }
+
+            return;
+        }
+
         boolean registrada = ordenController.crearOrdenDeServicio(
                 codigo,
                 dpFecha.getValue(),
@@ -323,6 +480,7 @@ public class NuevaOrdenViewController {
             tareas.clear();
             repuestos.clear();
 
+            cargarOrdenes();
         } else {
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Error");
